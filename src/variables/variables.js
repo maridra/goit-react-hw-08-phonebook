@@ -1,0 +1,1 @@
+export const BASE_PATH = '/goit-react-hw-08-phonebook';

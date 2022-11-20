@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addContact } from 'redux/contactsOperations';
-import { selectContacts } from 'redux/selectors';
+import { BsInputCursorText } from 'react-icons/bs';
+
+import { addContact } from 'redux/contacts/contactsOperations';
+import { selectContacts } from 'redux/contacts/contactsSelectors';
 
 import { findEvenName } from 'utils/findEvenName';
 
-import css from './Form.module.css';
+import css from './SubmitContact.module.css';
 
-export default function Form() {
+export default function SubmitContact() {
   const dispatch = useDispatch();
   const contactsData = useSelector(selectContacts);
 
@@ -35,7 +37,7 @@ export default function Form() {
       return;
     }
 
-    dispatch(addContact({ name, phone: number }));
+    dispatch(addContact({ name, number }));
     resetForm();
   };
 
@@ -45,9 +47,13 @@ export default function Form() {
   };
 
   return (
-    <form className={css.phonebook} onSubmit={handleFormSubmit}>
-      <label className={css.label}>
-        Name
+    <div className={css.box}>
+      <div className={css.title}>
+        <BsInputCursorText className={css.icon} />
+        <h3 className={css.text}>Enter contact details</h3>
+      </div>
+
+      <form className={css.form} onSubmit={handleFormSubmit}>
         <input
           className={css.field}
           type="text"
@@ -57,10 +63,9 @@ export default function Form() {
           value={name}
           onChange={handleInputChange}
           required
+          placeholder="Name"
         />
-      </label>
-      <label className={css.label}>
-        Phone number
+
         <input
           className={css.field}
           type="tel"
@@ -70,11 +75,13 @@ export default function Form() {
           value={number}
           onChange={handleInputChange}
           required
+          placeholder="Phone number"
         />
-      </label>
-      <button className={css.btn} type="submit">
-        Add contact
-      </button>
-    </form>
+
+        <button className={css.btn} type="submit">
+          Add contact
+        </button>
+      </form>
+    </div>
   );
 }

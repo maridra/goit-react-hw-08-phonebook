@@ -12,7 +12,7 @@ export default function Loader() {
         marginLeft: 'auto',
         marginRight: 'auto',
       }}
-      colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+      colors={['#fc0', '#fee270', '#ffffff', '#fee270', '#202020']}
     />
   );
 }

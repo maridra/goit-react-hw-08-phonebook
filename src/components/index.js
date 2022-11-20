@@ -1,4 +1,6 @@
-export { default as Form } from './Form/Form';
+export { default as SubmitContact } from './SubmitContact/SubmitContact';
 export { default as ContactsList } from './ContactsList/ContactsList';
-export { default as Filter } from './Filter/Filter';
+export { default as FilterContacts } from './FilterContacts/FilterContacts';
 export { default as Loader } from './Loader/Loader';
+export { default as SharedLayout } from './SharedLayout/SharedLayout';
+export { default as UserMenu } from './UserMenu/UserMenu';

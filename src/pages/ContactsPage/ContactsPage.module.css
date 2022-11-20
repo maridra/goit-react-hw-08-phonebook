@@ -1,0 +1,15 @@
+.box {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-around;
+  padding: 45px;
+  gap: 150px;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
