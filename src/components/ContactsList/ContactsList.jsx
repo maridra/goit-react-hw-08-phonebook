@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { MdDeleteForever } from 'react-icons/md';
 import { BsListNested } from 'react-icons/bs';
+import { TbMoodSad } from 'react-icons/tb';
 
 import { selectVisibleContacts } from 'redux/contacts/contactsSelectors';
 import { deleteContact } from 'redux/contacts/contactsOperations';
@@ -18,9 +19,9 @@ export default function ContactsList() {
         <BsListNested className={css.icon__title} />
         <h3 className={css.subtitle}>Your contacts</h3>
       </div>
-      <ul className={css.list}>
-        {visibleContacts.length > 0 &&
-          visibleContacts.map(contact => (
+      {visibleContacts.length > 0 ? (
+        <ul className={css.list}>
+          {visibleContacts.map(contact => (
             <li className={css.item} key={contact.id}>
               <span className={css.text}>
                 {contact.name}: {contact.number}
@@ -36,7 +37,13 @@ export default function ContactsList() {
               </button>
             </li>
           ))}
-      </ul>
+        </ul>
+      ) : (
+        <div className={css.notification}>
+          <p className={css.message}>There are no contacts in your list</p>
+          <TbMoodSad />
+        </div>
+      )}
     </div>
   );
 }

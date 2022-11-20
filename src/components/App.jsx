@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SharedLayout, PrivateRoute, PublicRoute } from 'components';
 import { refreshCurrentUser } from 'redux/auth/authOperations';
 import { selectIsRefreshing } from 'redux/auth/authSelectors';
-// import { SignUpForm, LogInForm, ContactsPages, Home } from 'pages';
 
 import css from './App.module.css';
 
@@ -27,7 +26,14 @@ export default function App() {
       <div className={css.main}>
         <Routes>
           <Route path="/" element={<SharedLayout />}>
-            <Route index element={<HomeView />} />
+            <Route
+              index
+              element={
+                <PublicRoute redirectTo="/contacts">
+                  <HomeView />
+                </PublicRoute>
+              }
+            />
             <Route
               path="register"
               element={
