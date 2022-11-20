@@ -1,15 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { SharedLayout } from 'components';
-import { SignUpForm, LogInForm, ContactsPages, Home } from 'pages';
+import { SharedLayout, PrivateRoute, PublicRoute } from 'components';
 import { refreshCurrentUser } from 'redux/auth/authOperations';
-// import { selectIsLoading, selectError } from 'redux/selectors';
+import { selectIsRefreshing } from 'redux/auth/authSelectors';
+// import { SignUpForm, LogInForm, ContactsPages, Home } from 'pages';
 
 import css from './App.module.css';
 
+const HomeView = lazy(() => import('pages/Home/Home'));
+const SighUpView = lazy(() => import('pages/AuthPages/SignUpForm'));
+const LogInView = lazy(() => import('pages/AuthPages/LogInForm'));
+const ContactsView = lazy(() => import('pages/ContactsPage/ContactPages'));
+
 export default function App() {
+  const isRefreshing = useSelector(selectIsRefreshing);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,15 +23,38 @@ export default function App() {
   }, [dispatch]);
 
   return (
-    <div className={css.main}>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Home />} />
-          <Route path="register" element={<SignUpForm />} />
-          <Route path="login" element={<LogInForm />} />
-          <Route path="/contacts" element={<ContactsPages />} />
-        </Route>
-      </Routes>
-    </div>
+    !isRefreshing && (
+      <div className={css.main}>
+        <Routes>
+          <Route path="/" element={<SharedLayout />}>
+            <Route index element={<HomeView />} />
+            <Route
+              path="register"
+              element={
+                <PublicRoute redirectTo="/contacts" restricted>
+                  <SighUpView />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="login"
+              element={
+                <PublicRoute redirectTo="/contacts" restricted>
+                  <LogInView />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/contacts"
+              element={
+                <PrivateRoute>
+                  <ContactsView />
+                </PrivateRoute>
+              }
+            />
+          </Route>
+        </Routes>
+      </div>
+    )
   );
 }
