@@ -1,6 +1,14 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+Notify.init({
+  width: '350px',
+  borderRadius: '5px',
+  fontFamily: 'Roboto',
+  fontSize: '16px',
+});
+
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
 const token = {
@@ -8,7 +16,7 @@ const token = {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
 
-  unset(token) {
+  unset() {
     axios.defaults.headers.common.Authorization = '';
   },
 };
@@ -21,6 +29,9 @@ export const register = createAsyncThunk(
       token.set(data.token);
       return data;
     } catch (error) {
+      Notify.failure(
+        'An error has occurred❗️Please make sure the data is correct and try again.'
+      );
       return thunkApi.rejectWithValue(error.message);
     }
   }
@@ -34,6 +45,9 @@ export const logIn = createAsyncThunk(
       token.set(data.token);
       return data;
     } catch (error) {
+      Notify.failure(
+        'An error has occurred❗️Please make sure the data is correct and try again.'
+      );
       return thunkApi.rejectWithValue(error.message);
     }
   }

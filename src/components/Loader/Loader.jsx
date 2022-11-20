@@ -11,6 +11,7 @@ export default function Loader() {
         display: 'block',
         marginLeft: 'auto',
         marginRight: 'auto',
+        marginTop: '200px',
       }}
       colors={['#fc0', '#fee270', '#ffffff', '#fee270', '#202020']}
     />
